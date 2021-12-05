@@ -5,9 +5,10 @@ filetype indent on
 syntax on
 set background=dark
 set encoding=utf-8
-set cmdheight=2
 set updatetime=300
 set clipboard=unnamed
+set splitbelow
+set splitright
 
 set nocompatible
 set wildmenu
@@ -51,14 +52,12 @@ set spell spelllang=en_us
 call plug#begin('~/.vim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jiangmiao/auto-pairs'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-fugitive'
-Plug 'leafgarland/typescript-vim'
-Plug 'vim-utils/vim-man'
-Plug 'lyuts/vim-rtags'
 Plug 'mbbill/undotree'
 Plug 'kien/ctrlp.vim'
 Plug 'cdelledonne/vim-cmake'
@@ -72,13 +71,12 @@ colorscheme gruvbox
 
 " MAPPINGS ------------------------------------------------------- {{{
 
-let g:floaterm_position = 'bottom'
-let g:floaterm_width = 1.0
-let g:floaterm_height = 0.4
-
 let g:cmake_link_compile_commands = 1
+let g:cmake_build_dir_location = 'build'
+let g:airline_powerline_fonts = 1
+let g:airline_detect_spell = 0
 
-nmap <c-t> :FloatermNew fff<cr>
+set noshowmode " don't need to see INSERT/NORMAL because of Airline plugin
 
 let mapleader = '\'
 " press \\ to jump back to the last cursor position
@@ -121,6 +119,7 @@ nnoremap <leader>h :wincmd h<cr>
 nnoremap <leader>j :wincmd j<cr>
 nnoremap <leader>k :wincmd k<cr>
 nnoremap <leader>l :wincmd l<cr>
+
 nnoremap <leader>u :UndotreeShow<cr>
 nnoremap <leader>pv :wincdm v<bar> :Ex <bar> :vertical resize 30<cr>
 nnoremap <leader>ps :Rg<SPACE>
@@ -134,11 +133,16 @@ if executable('rg')
 	let g:rg_derive_root='true'
 endif
 
+" ctrl+d to switch to file name search
+" ctrl+r regex mode
+" ctrl+j or ctrl+k to browse files
+" ctrl+f or ctrl+d to toggle between modes
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-let g:netrw_browse_split=2
-let g:netrw_banner=0
-let g:netrw_winsize=25
-
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+		\ 'dir': '\v[\/]\.(git|hg|svn)$',
+		\ 'file': '\v\.(exe|so|dll)$',
+		\ }
 let g:ctrlp_use_caching=0
 
 " cpp bindings

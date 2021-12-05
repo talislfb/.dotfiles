@@ -1,4 +1,4 @@
 #!/bin/bash
 
-stow --adopt -vt ~ git
-stow --adopt -vt ~ vim
+stow -vSt ~ git
+stow -vSt ~ vim
