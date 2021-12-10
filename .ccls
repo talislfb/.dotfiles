@@ -1,0 +1,2 @@
+clang++
+%hpp %h %c %cpp -std=c++17
